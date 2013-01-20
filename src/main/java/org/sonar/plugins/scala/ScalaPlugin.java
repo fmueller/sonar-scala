@@ -44,6 +44,7 @@ public class ScalaPlugin extends SonarPlugin {
     extensions.add(ScalaSourceImporterSensor.class);
     extensions.add(ScalaColorizerFormat.class);
     extensions.add(BaseMetricsSensor.class);
+    extensions.add(ScalaDefaultProfile.class);
     return extensions;
   }
 

@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.codehaus.sonar-plugins</groupId>
     <artifactId>parent</artifactId>
-    <version>13</version>
+    <version>16</version>
   </parent>
 
   <artifactId>sonar-scala-plugin</artifactId>
@@ -62,7 +62,7 @@
   </repositories>
 
   <properties>
-    <sonar.version>2.9</sonar.version>
+    <sonar.version>3.0</sonar.version>
     <sonar.pluginKey>scala</sonar.pluginKey>
     <sonar.pluginName>Scala</sonar.pluginName>
     <sonar.pluginClass>org.sonar.plugins.scala.ScalaPlugin</sonar.pluginClass>
@@ -135,65 +135,7 @@
         <plugin>
           <groupId>org.codehaus.sonar</groupId>
           <artifactId>sonar-maven-plugin</artifactId>
-          <version>2.9</version>
-        </plugin>
-
-        <!--
-          This plugin's configuration is used to store Eclipse m2e settings 
-          only. It has no influence on the Maven build itself.
-        -->
-        <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
-          <configuration>
-            <lifecycleMappingMetadata>
-              <pluginExecutions>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>org.scala-tools</groupId>
-                    <artifactId>maven-scala-plugin</artifactId>
-                    <versionRange>[2.15.2,)</versionRange>
-                    <goals>
-                      <goal>testCompile</goal>
-                      <goal>compile</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore />
-                  </action>
-                </pluginExecution>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>org.codehaus.sonar</groupId>
-                    <artifactId>
-                      sonar-packaging-maven-plugin
-                    </artifactId>
-                    <versionRange>[1.1,)</versionRange>
-                    <goals>
-                      <goal>check-dependencies</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore />
-                  </action>
-                </pluginExecution>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>com.mycila.maven-license-plugin</groupId>
-                    <artifactId>maven-license-plugin</artifactId>
-                    <versionRange>[1.9.0,)</versionRange>
-                    <goals>
-                      <goal>check</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore />
-                  </action>
-                </pluginExecution>
-              </pluginExecutions>
-            </lifecycleMappingMetadata>
-          </configuration>
+          <version>${sonar.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>
