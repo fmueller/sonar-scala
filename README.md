@@ -1,7 +1,6 @@
 Sonar Scala Plugin
 ===========
-Supports Sonar 3.0+
-Requires Cobertura and Surefire plugins.
+Supports Sonar 3.0+ and requires Cobertura and Surefire plugins.
 
 To include test and coverage reports:
 
