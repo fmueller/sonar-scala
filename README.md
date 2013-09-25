@@ -4,7 +4,7 @@ Supports Sonar 3.0+ and requires Cobertura and Surefire plugins.
 
 To include test and coverage reports:
 
-1. Install these plugins in your scala project:
+Install these plugins in your scala project:
 
 https://github.com/bseibel/sbt-simple-junit-xml-reporter-plugin
 - Creates junit xml reports for output from scalatest.
@@ -12,7 +12,8 @@ https://github.com/bseibel/sbt-simple-junit-xml-reporter-plugin
 http://mtkopone.github.io/scct/
 - Creates a Scala-friendly code-coverage report, and includes a coberura xml report.
 
-2. Add the following properties to your project's sonar-project.properties file:
+
+Add the following properties to your project's sonar-project.properties file:
 
 sonar.dynamicAnalysis=reuseReports
 sonar.surefire.reportsPath=test-reports
