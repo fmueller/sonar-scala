@@ -10,7 +10,7 @@
 
   <artifactId>sonar-scala-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.2-SNAPSHOT</version>
 
   <name>Sonar Scala Plugin</name>
   <description>Enables analysis of Scala projects into Sonar.</description>
@@ -77,6 +77,18 @@
       <groupId>org.codehaus.sonar</groupId>
       <artifactId>sonar-plugin-api</artifactId>
       <version>${sonar.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.sonar.plugins</groupId>
+      <artifactId>sonar-surefire-plugin</artifactId>
+      <version>${sonar.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.sonar.plugins</groupId>
+      <artifactId>sonar-cobertura-plugin</artifactId>
+      <version>${sonar.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.scala-lang</groupId>
