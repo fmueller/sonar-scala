@@ -80,4 +80,18 @@ public class ScalaCoberturaParserTest {
         assertEquals("com.mock.scalapackage", scalaPackage.getName());
     }
 
+    @Test
+    public void should_create_ScalaFile_resource_when_scct_bug_for_play_app() {
+        Resource resource = underTest.getResource("app.com.mock.scalapackage.MockScalaClass");
+        assertNotNull(resource);
+        assertTrue(resource instanceof  ScalaFile);
+
+        ScalaFile file = (ScalaFile)resource;
+        assertEquals("MockScalaClass", file.getName());
+
+        ScalaPackage scalaPackage = file.getParent();
+        assertNotNull(scalaPackage);
+        assertEquals("com.mock.scalapackage", scalaPackage.getName());
+    }
+
 }
