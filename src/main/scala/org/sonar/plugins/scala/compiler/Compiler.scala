@@ -1,4 +1,4 @@
-/**
+/*
  * Sonar Scala Plugin
  * Copyright (C) 2011 - 2013 All contributors
  * dev@sonar.codehaus.org

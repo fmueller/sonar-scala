@@ -175,6 +175,7 @@
           </includes>
           <mapping>
             <java>SLASHSTAR_STYLE</java>
+            <scala>SLASHSTAR_STYLE</scala>
           </mapping>
           <strictCheck>true</strictCheck>
         </configuration>
