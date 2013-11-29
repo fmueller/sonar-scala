@@ -1,7 +1,7 @@
 /*
  * Sonar Scala Plugin
- * Copyright (C) 2011 Felix Müller
- * felix.mueller.berlin@googlemail.com
+ * Copyright (C) 2011 - 2013 All contributors
+ * dev@sonar.codehaus.org
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -43,13 +43,13 @@ public class CoberturaSensorTest {
    * See SONARPLUGINS-696
    */
   @Test
-  public void should_parse_report() {
+  public void shouldParseReport() {
     SensorContext context = mock(SensorContext.class);
     sensor.parseReport(TestUtils.getResource("/org/sonar/plugins/scala/cobertura/coverage.xml"), context);
   }
 
   @Test
-  public void should_not_execute_if_static_analysis() {
+  public void shouldNotExecuteIfStaticAnalysis() {
     Project project = mock(Project.class);
     when(project.getLanguageKey()).thenReturn(Scala.INSTANCE.getKey());
     when(project.getAnalysisType()).thenReturn(Project.AnalysisType.STATIC);
@@ -57,7 +57,7 @@ public class CoberturaSensorTest {
   }
 
   @Test
-  public void should_not_execute_on_java_project() {
+  public void shouldNotExecuteOnJavaProject() {
     Project project = mock(Project.class);
     when(project.getLanguageKey()).thenReturn("java");
     when(project.getAnalysisType()).thenReturn(Project.AnalysisType.DYNAMIC);
@@ -65,7 +65,7 @@ public class CoberturaSensorTest {
   }
 
   @Test
-  public void test_toString() {
+  public void testToString() {
     assertEquals(sensor.toString(), "Scala CoberturaSensor");
   }
 }

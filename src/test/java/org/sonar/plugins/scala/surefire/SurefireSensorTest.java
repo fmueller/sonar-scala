@@ -1,7 +1,7 @@
 /*
  * Sonar Scala Plugin
- * Copyright (C) 2011 Felix Müller
- * felix.mueller.berlin@googlemail.com
+ * Copyright (C) 2011 - 2013 All contributors
+ * dev@sonar.codehaus.org
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -33,7 +33,7 @@ public class SurefireSensorTest {
     private SurefireSensor sensor = new SurefireSensor();
 
     @Test
-    public void should_execute_on_project() {
+    public void shouldExecuteOnProject() {
         Project project = mock(Project.class);
         when(project.getLanguageKey()).thenReturn(Scala.INSTANCE.getKey());
         when(project.getAnalysisType()).thenReturn(Project.AnalysisType.REUSE_REPORTS);
@@ -43,7 +43,7 @@ public class SurefireSensorTest {
     }
 
     @Test
-    public void should_not_execute_if_static_analysis() {
+    public void shouldNotExecuteIfStaticAnalysis() {
         Project project = mock(Project.class);
         when(project.getLanguageKey()).thenReturn(Scala.INSTANCE.getKey());
         when(project.getAnalysisType()).thenReturn(Project.AnalysisType.STATIC);
@@ -51,7 +51,7 @@ public class SurefireSensorTest {
     }
 
     @Test
-    public void should_not_execute_on_java_project() {
+    public void shouldNotExecuteOnJavaProject() {
         Project project = mock(Project.class);
         when(project.getLanguageKey()).thenReturn("java");
         when(project.getAnalysisType()).thenReturn(Project.AnalysisType.DYNAMIC);
@@ -59,12 +59,12 @@ public class SurefireSensorTest {
     }
 
     @Test
-    public void should_depend_on_coverage_sensors() {
+    public void shouldDependOnCoverageSensors() {
         assertEquals(CoverageExtension.class, sensor.dependsUponCoverageSensors());
     }
 
     @Test
-    public void test_toString() {
+    public void testToString() {
         assertEquals("Scala SurefireSensor", sensor.toString());
     }
 

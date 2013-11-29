@@ -1,7 +1,7 @@
 /*
  * Sonar Scala Plugin
- * Copyright (C) 2011 Felix Müller
- * felix.mueller.berlin@googlemail.com
+ * Copyright (C) 2011 - 2013 All contributors
+ * dev@sonar.codehaus.org
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,7 +17,6 @@
  * License along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-
 package org.sonar.plugins.scala.cobertura;
 
 import org.slf4j.Logger;

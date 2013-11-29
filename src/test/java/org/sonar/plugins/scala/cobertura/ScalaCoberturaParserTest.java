@@ -1,7 +1,7 @@
 /*
  * Sonar Scala Plugin
- * Copyright (C) 2011 Felix Müller
- * felix.mueller.berlin@googlemail.com
+ * Copyright (C) 2011 - 2013 All contributors
+ * dev@sonar.codehaus.org
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,7 +17,6 @@
  * License along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-
 package org.sonar.plugins.scala.cobertura;
 
 import org.junit.Before;
@@ -38,9 +37,8 @@ public class ScalaCoberturaParserTest {
     }
 
     @Test
-    public void should_create_ScalaFile_resource_when_deep_package() {
+    public void shouldCreateScalaFileResourceWhenDeepPackage() {
         Resource resource = underTest.getResource("com.mock.scalapackage.MockScalaClass");
-        assertNotNull(resource);
         assertTrue(resource instanceof  ScalaFile);
 
         ScalaFile file = (ScalaFile)resource;
@@ -52,9 +50,8 @@ public class ScalaCoberturaParserTest {
     }
 
     @Test
-    public void should_create_ScalaFile_resource_when_root_package() {
+    public void shouldCreateScalaFileResourceWhenRootPackage() {
         Resource resource = underTest.getResource("MockScalaClass");
-        assertNotNull(resource);
         assertTrue(resource instanceof  ScalaFile);
 
         ScalaFile file = (ScalaFile)resource;
@@ -67,9 +64,8 @@ public class ScalaCoberturaParserTest {
 
     // TODO remove this test once the sbt scct plugin is patched to produce the correct class name.
     @Test
-    public void should_create_ScalaFile_resource_when_scct_bug() {
+    public void shouldCreateScalaFileResourceWhenScctBug() {
         Resource resource = underTest.getResource("src.main.scala.com.mock.scalapackage.MockScalaClass");
-        assertNotNull(resource);
         assertTrue(resource instanceof  ScalaFile);
 
         ScalaFile file = (ScalaFile)resource;
@@ -81,9 +77,8 @@ public class ScalaCoberturaParserTest {
     }
 
     @Test
-    public void should_create_ScalaFile_resource_when_scct_bug_for_play_app() {
+    public void shouldCreateScalaFileResourceWhenScctBugForPlayApp() {
         Resource resource = underTest.getResource("app.com.mock.scalapackage.MockScalaClass");
-        assertNotNull(resource);
         assertTrue(resource instanceof  ScalaFile);
 
         ScalaFile file = (ScalaFile)resource;
