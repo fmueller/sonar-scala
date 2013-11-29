@@ -6,10 +6,10 @@ To include test and coverage reports:
 
 Install these plugins in your scala project:
 
-https://github.com/bseibel/sbt-simple-junit-xml-reporter-plugin
+https://github.com/mmarich/sbt-simple-junit-xml-reporter-plugin
 - Creates junit xml reports for output from scalatest.
 
-http://mtkopone.github.io/scct/
+https://github.com/sqality/scct
 - Creates a Scala-friendly code-coverage report, and includes a coberura xml report.
 
 
