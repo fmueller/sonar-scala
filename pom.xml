@@ -16,9 +16,6 @@
   <description>Enables analysis of Scala projects into Sonar.</description>
   <url>http://docs.codehaus.org/display/SONAR/Scala+Plugin</url>
   <inceptionYear>2011</inceptionYear>
-  <organization>
-    <name>Felix Müller</name>
-  </organization>
 
   <licenses>
     <license>
@@ -33,6 +30,7 @@
       <id>fmueller</id>
       <name>Felix Müller</name>
       <email>felix.mueller.berlin@googlemail.com</email>
+      <timezone>+1</timezone>
     </developer>
   </developers>
 
@@ -66,8 +64,6 @@
     <sonar.pluginKey>scala</sonar.pluginKey>
     <sonar.pluginName>Scala</sonar.pluginName>
     <sonar.pluginClass>org.sonar.plugins.scala.ScalaPlugin</sonar.pluginClass>
-
-    <license.mailto>felix.mueller.berlin@googlemail.com</license.mailto>
 
     <scala.version>2.9.1</scala.version>
   </properties>
@@ -177,19 +173,40 @@
       <plugin>
         <groupId>com.mycila.maven-license-plugin</groupId>
         <artifactId>maven-license-plugin</artifactId>
-        <version>1.9.0</version>
         <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <properties>
+            <owner>All contributors</owner>
+            <year>2011 - 2013</year>
+          </properties>
           <includes>
             <include>src/main/java/**</include>
-            <include>src/test/java/**</include>
             <include>src/main/scala/**</include>
+            <include>src/test/java/**</include>
             <include>src/test/scala/**</include>
           </includes>
           <mapping>
             <java>SLASHSTAR_STYLE</java>
             <scala>SLASHSTAR_STYLE</scala>
           </mapping>
+          <strictCheck>true</strictCheck>
         </configuration>
+        <executions>
+          <execution>
+            <id>add-license-headers</id>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>format</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>enforce-license-headers</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>

@@ -1,7 +1,7 @@
 /*
  * Sonar Scala Plugin
- * Copyright (C) 2011 Felix Müller
- * felix.mueller.berlin@googlemail.com
+ * Copyright (C) 2011 - 2013 All contributors
+ * dev@sonar.codehaus.org
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
