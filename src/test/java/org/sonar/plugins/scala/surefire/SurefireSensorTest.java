@@ -20,6 +20,7 @@
 package org.sonar.plugins.scala.surefire;
 
 import org.junit.Test;
+import org.junit.Before;
 import org.sonar.api.batch.CoverageExtension;
 import org.sonar.api.resources.Project;
 import org.sonar.plugins.scala.language.Scala;
@@ -30,21 +31,31 @@ import static org.mockito.Mockito.when;
 
 public class SurefireSensorTest {
 
-    private SurefireSensor sensor = new SurefireSensor();
+    private SurefireSensor sensor;
+    private Project project;
+    
+    @Before
+    public void setUp() {
+    	sensor = new SurefireSensor();
+    	project = mock(Project.class);
+    }
 
     @Test
-    public void shouldExecuteOnProject() {
-        Project project = mock(Project.class);
+    public void shouldExecuteOnReuseReports() {
         when(project.getLanguageKey()).thenReturn(Scala.INSTANCE.getKey());
         when(project.getAnalysisType()).thenReturn(Project.AnalysisType.REUSE_REPORTS);
         assertTrue(sensor.shouldExecuteOnProject(project));
+    }
+
+    @Test
+    public void shouldExecuteOnDynamicAnalysis() {
+        when(project.getLanguageKey()).thenReturn(Scala.INSTANCE.getKey());
         when(project.getAnalysisType()).thenReturn(Project.AnalysisType.DYNAMIC);
         assertTrue(sensor.shouldExecuteOnProject(project));
     }
 
     @Test
     public void shouldNotExecuteIfStaticAnalysis() {
-        Project project = mock(Project.class);
         when(project.getLanguageKey()).thenReturn(Scala.INSTANCE.getKey());
         when(project.getAnalysisType()).thenReturn(Project.AnalysisType.STATIC);
         assertFalse(sensor.shouldExecuteOnProject(project));
@@ -52,7 +63,6 @@ public class SurefireSensorTest {
 
     @Test
     public void shouldNotExecuteOnJavaProject() {
-        Project project = mock(Project.class);
         when(project.getLanguageKey()).thenReturn("java");
         when(project.getAnalysisType()).thenReturn(Project.AnalysisType.DYNAMIC);
         assertFalse(sensor.shouldExecuteOnProject(project));
@@ -67,5 +77,4 @@ public class SurefireSensorTest {
     public void testToString() {
         assertEquals("Scala SurefireSensor", sensor.toString());
     }
-
 }
