@@ -77,7 +77,7 @@ public class BaseMetricsSensorTest {
     verifyMeasuring(CoreMetrics.FILES, NUMBER_OF_FILES, 1.0);
   }
 
-    @Test
+  @Test
   public void shouldMeasureNothingWhenNoFiles() {
     analyseScalaFiles(0);
     verifyNoMoreInteractions(sensorContext);
@@ -201,7 +201,7 @@ public class BaseMetricsSensorTest {
     analyseScalaFiles(1);
   }
 
-    private void analyseAllScalaFiles() {
+  private void analyseAllScalaFiles() {
     analyseScalaFiles(NUMBER_OF_FILES);
   }
 
