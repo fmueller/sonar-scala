@@ -24,6 +24,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -74,6 +75,12 @@ public class BaseMetricsSensorTest {
   public void shouldIncreaseFileMetricForAllScalaFiles() throws IOException {
     analyseAllScalaFiles();
     verifyMeasuring(CoreMetrics.FILES, NUMBER_OF_FILES, 1.0);
+  }
+
+  @Test
+  public void shouldMeasureNothingWhenNoFiles() {
+    analyseScalaFiles(0);
+    verifyNoMoreInteractions(sensorContext);
   }
 
   @Test
