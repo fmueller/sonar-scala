@@ -24,6 +24,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -76,7 +77,13 @@ public class BaseMetricsSensorTest {
     verifyMeasuring(CoreMetrics.FILES, NUMBER_OF_FILES, 1.0);
   }
 
-  @Test
+    @Test
+  public void shouldMeasureNothingWhenNoFiles() {
+    analyseScalaFiles(0);
+    verifyNoMoreInteractions(sensorContext);
+  }
+
+    @Test
   public void shouldIncrementPackageMetricForOneScalaFile() {
     analyseOneScalaFile();
     verify(sensorContext).saveMeasure(any(ScalaPackage.class), eq(CoreMetrics.PACKAGES), eq(1.0));
@@ -194,7 +201,7 @@ public class BaseMetricsSensorTest {
     analyseScalaFiles(1);
   }
 
-  private void analyseAllScalaFiles() {
+    private void analyseAllScalaFiles() {
     analyseScalaFiles(NUMBER_OF_FILES);
   }
 
