@@ -83,7 +83,7 @@ public class BaseMetricsSensorTest {
     verifyNoMoreInteractions(sensorContext);
   }
 
-    @Test
+  @Test
   public void shouldIncrementPackageMetricForOneScalaFile() {
     analyseOneScalaFile();
     verify(sensorContext).saveMeasure(any(ScalaPackage.class), eq(CoreMetrics.PACKAGES), eq(1.0));
