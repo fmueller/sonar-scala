@@ -21,6 +21,7 @@ package org.sonar.plugins.scala.surefire;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonar.api.CoreProperties;
 import org.sonar.api.batch.CoverageExtension;
 import org.sonar.api.batch.DependsUpon;
 import org.sonar.api.batch.Sensor;
@@ -48,8 +49,9 @@ public class SurefireSensor implements Sensor {
     }
 
     public void analyse(Project project, SensorContext context) {
-        File dir = SurefireUtils.getReportsDirectory(project);
-        collect(project, context, dir);
+        String path = (String) project.getProperty(CoreProperties.SUREFIRE_REPORTS_PATH_PROPERTY);
+        File pathFile = project.getFileSystem().resolvePath(path);
+        collect(project, context, pathFile);
     }
 
     protected void collect(Project project, SensorContext context, File reportsDir) {
