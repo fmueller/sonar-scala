@@ -15,8 +15,8 @@ https://github.com/sqality/scct
 
 Add the following properties to your project's sonar-project.properties file:
 
-sonar.dynamicAnalysis=reuseReports
-sonar.surefire.reportsPath=test-reports
-sonar.core.codeCoveragePlugin=cobertura
-sonar.java.coveragePlugin=cobertura
-sonar.cobertura.reportPath=target/scala-[scala-version]/coverage-report/cobertura.xml
+    sonar.dynamicAnalysis=reuseReports
+    sonar.surefire.reportsPath=test-reports
+    sonar.core.codeCoveragePlugin=cobertura
+    sonar.java.coveragePlugin=cobertura
+    sonar.cobertura.reportPath=target/scala-[scala-version]/coverage-report/cobertura.xml
