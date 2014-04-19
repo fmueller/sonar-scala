@@ -25,15 +25,6 @@
     </license>
   </licenses>
 
-  <developers>
-    <developer>
-      <id>fmueller</id>
-      <name>Felix Müller</name>
-      <email>felix.mueller.berlin@googlemail.com</email>
-      <timezone>+1</timezone>
-    </developer>
-  </developers>
-
   <scm>
     <connection>scm:svn:http://svn.codehaus.org/sonar-plugins/trunk/scala</connection>
     <developerConnection>scm:svn:https://svn.codehaus.org/sonar-plugins/trunk/scala</developerConnection>
@@ -177,7 +168,7 @@
           <encoding>${project.build.sourceEncoding}</encoding>
           <properties>
             <owner>All contributors</owner>
-            <year>2011 - 2013</year>
+            <year>2011 - 2014</year>
           </properties>
           <includes>
             <include>src/main/java/**</include>
