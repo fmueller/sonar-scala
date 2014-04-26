@@ -19,19 +19,19 @@
  */
 package org.sonar.plugins.scala.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonar.api.resources.InputFile;
 import org.sonar.api.resources.InputFileUtils;
 import org.sonar.plugins.scala.language.ScalaFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class FileTestUtils {
 
@@ -52,12 +52,11 @@ public final class FileTestUtils {
     return getInputFiles(path, fileNameBase, "scala", numberOfFiles);
   }
 
-  public static List<InputFile> getInputFiles(String path, String fileNameBase,
-      String fileSuffix, int numberOfFiles) {
+  public static List<InputFile> getInputFiles(String path, String fileNameBase, String fileSuffix, int numberOfFiles) {
     List<File> mainFiles = new ArrayList<File>();
 
     URL resourceURL = FileTestUtils.class.getResource(path + fileNameBase + "1." + fileSuffix);
-    for (int i = 1; resourceURL != null && i <= numberOfFiles;) {
+    for (int i = 1; resourceURL != null && i <= numberOfFiles; ) {
       mainFiles.add(new File(resourceURL.getFile()));
       resourceURL = FileTestUtils.class.getResource(path + fileNameBase + (++i) + "." + fileSuffix);
     }
@@ -65,15 +64,13 @@ public final class FileTestUtils {
     return InputFileUtils.create(new File(FileTestUtils.class.getResource(path).getFile()), mainFiles);
   }
 
-  public static List<String> getContentOfFiles(String path, String fileNameBase,
-      int numberOfFiles) throws IOException {
+  public static List<String> getContentOfFiles(String path, String fileNameBase, int numberOfFiles) throws IOException {
     List<String> contentOfFiles = new ArrayList<String>();
 
     URL resourceURL = FileTestUtils.class.getResource(path + fileNameBase + "1.scala");
-    for (int i = 1; resourceURL != null && i <= numberOfFiles;) {
+    for (int i = 1; resourceURL != null && i <= numberOfFiles; ) {
       try {
-        contentOfFiles.add(FileUtils.readFileToString(new File(resourceURL.getFile()),
-            Charset.defaultCharset().toString()));
+        contentOfFiles.add(FileUtils.readFileToString(new File(resourceURL.getFile()), Charset.defaultCharset().toString()));
       } catch (IOException ioe) {
         LOGGER.error("Unexpected I/O exception occurred", ioe);
         throw ioe;

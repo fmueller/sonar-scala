@@ -35,12 +35,12 @@ object Compiler extends Global(new Settings() {
 
 }) {
 
-  private val LOGGER = LoggerFactory.getLogger(classOf[Compiler])
+  private val logger = LoggerFactory.getLogger(classOf[Compiler])
 
   try {
     new Run()
   } catch {
-    case ex: Throwable => LOGGER.error("Could not initiate Scala compiler, probably due classpath issues!", ex)
+    case ex: Throwable => logger.error("Could not initiate Scala compiler, probably due classpath issues!", ex)
   }
 
   override def forScaladoc = true

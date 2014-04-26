@@ -19,8 +19,6 @@
  */
 package org.sonar.plugins.scala.sensor;
 
-import java.io.IOException;
-
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +30,8 @@ import org.sonar.api.resources.Project;
 import org.sonar.api.resources.ProjectFileSystem;
 import org.sonar.plugins.scala.language.Scala;
 import org.sonar.plugins.scala.language.ScalaFile;
+
+import java.io.IOException;
 
 /**
  * This Sensor imports all Scala files into Sonar.
@@ -61,20 +61,19 @@ public class ScalaSourceImporterSensor extends AbstractScalaSensor {
     }
   }
 
-  private void addFileToSonar(SensorContext sensorContext, InputFile inputFile,
-      boolean isUnitTest, String charset) {
+  private void addFileToSonar(SensorContext sensorContext, InputFile inputFile, boolean isUnitTest, String charset) {
     try {
       String source = FileUtils.readFileToString(inputFile.getFile(), charset);
-      ScalaFile resource = ScalaFile.fromInputFile(inputFile, isUnitTest);
+      ScalaFile file = ScalaFile.fromInputFile(inputFile, isUnitTest);
 
-      sensorContext.index(resource);
-      sensorContext.saveSource(resource, source);
+      sensorContext.index(file);
+      sensorContext.saveSource(file, source);
 
       if (LOGGER.isDebugEnabled()) {
         if (isUnitTest) {
-          LOGGER.debug("Added Scala test file to Sonar: " + inputFile.getFile().getAbsolutePath());
+          LOGGER.debug("Added Scala test file to Sonar: {}", file);
         } else {
-          LOGGER.debug("Added Scala source file to Sonar: " + inputFile.getFile().getAbsolutePath());
+          LOGGER.debug("Added Scala source file to Sonar: {}", file);
         }
       }
     } catch (IOException ioe) {

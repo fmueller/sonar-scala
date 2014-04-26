@@ -20,6 +20,7 @@
 package org.sonar.plugins.scala.language;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.sonar.api.resources.Language;
 import org.sonar.api.resources.Qualifiers;
 import org.sonar.api.resources.Resource;
@@ -36,10 +37,6 @@ import org.sonar.api.utils.WildcardPattern;
 public class ScalaPackage extends Resource {
 
   public static final String DEFAULT_PACKAGE_NAME = "[default]";
-
-  public ScalaPackage() {
-    this(null);
-  }
 
   public ScalaPackage(String key) {
     super();
@@ -86,5 +83,12 @@ public class ScalaPackage extends Resource {
     String patternWithoutFileSuffix = StringUtils.substringBeforeLast(antPattern, ".");
     WildcardPattern matcher = WildcardPattern.create(patternWithoutFileSuffix, ".");
     return matcher.match(getKey());
+  }
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("key", getKey())
+        .toString();
   }
 }

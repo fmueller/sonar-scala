@@ -116,7 +116,7 @@ public class ScalaFile extends Resource<ScalaPackage> {
   /**
    * Creates a {@link ScalaFile} from a file in the source directories.
    *
-   * @param inputFile the file object with relative path
+   * @param inputFile  the file object with relative path
    * @param isUnitTest whether it is a unit test file or a source file
    * @return the {@link ScalaFile} created if exists, null otherwise
    */
@@ -125,10 +125,25 @@ public class ScalaFile extends Resource<ScalaPackage> {
       return null;
     }
 
-    final String packageName = PackageResolver.resolvePackageNameOfFile(
-        inputFile.getFile().getAbsolutePath());
-    final String className = resolveClassName(inputFile);
+    String packageName = PackageResolver.resolvePackageNameOfFile(inputFile.getFile().getAbsolutePath());
+    String className = resolveClassName(inputFile);
+
+    if (isPackageObjectInFirstLevelPackage(packageName, className)) {
+      String lastFolderName = extractLastFolderName(inputFile);
+      return new ScalaFile(StringUtils.EMPTY, lastFolderName + "." + className, isUnitTest);
+    }
+
     return new ScalaFile(packageName, className, isUnitTest);
+  }
+
+  private static boolean isPackageObjectInFirstLevelPackage(String packageName, String className) {
+    return "<empty>".equalsIgnoreCase(packageName) && "package".equalsIgnoreCase(className);
+  }
+
+  private static String extractLastFolderName(InputFile inputFile) {
+    String absolutePath = inputFile.getFile().getAbsolutePath();
+    int lastPathSeparator = absolutePath.lastIndexOf("/");
+    return absolutePath.substring(absolutePath.lastIndexOf("/", lastPathSeparator - 1) + 1, lastPathSeparator);
   }
 
   private static String resolveClassName(InputFile inputFile) {
@@ -139,12 +154,14 @@ public class ScalaFile extends Resource<ScalaPackage> {
     return StringUtils.substringBeforeLast(classname, ".");
   }
 
-    @Override
-    public String toString() {
-      return new ToStringBuilder(this)
-          .append("key", getKey())
-          .append("fileName", filename)
-          .append("isUnitTest", isUnitTest)
-          .toString();
-    }
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this)
+        .append("key", getKey())
+        .append("fileName", filename)
+        .append("isUnitTest", isUnitTest)
+        .append("longName", longName)
+        .append("parent", parent)
+        .toString();
+  }
 }

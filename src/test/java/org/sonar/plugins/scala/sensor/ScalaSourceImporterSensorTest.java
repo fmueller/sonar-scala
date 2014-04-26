@@ -19,30 +19,27 @@
  */
 package org.sonar.plugins.scala.sensor;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
 import org.sonar.api.batch.SensorContext;
 import org.sonar.api.resources.InputFile;
+import org.sonar.api.resources.InputFileUtils;
 import org.sonar.api.resources.Java;
 import org.sonar.api.resources.Project;
 import org.sonar.api.resources.ProjectFileSystem;
 import org.sonar.plugins.scala.language.Scala;
 import org.sonar.plugins.scala.util.FileTestUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
 
 public class ScalaSourceImporterSensorTest {
 
@@ -62,7 +59,7 @@ public class ScalaSourceImporterSensorTest {
     project = mock(Project.class);
     when(project.getFileSystem()).thenReturn(fileSystem);
 
-    sensorContext = mock(SensorContext.class);
+    sensorContext = spy(new FakeSensorContext());
   }
 
   @Test
@@ -198,6 +195,22 @@ public class ScalaSourceImporterSensorTest {
     verify(sensorContext, times(1)).saveSource(eq(FileTestUtils.SCALA_TEST_FILE), eq(contentOfFiles.get(0)));
     verify(sensorContext, times(1)).saveSource(eq(FileTestUtils.SCALA_TEST_FILE), eq(contentOfFiles.get(1)));
     verify(sensorContext, times(1)).saveSource(eq(FileTestUtils.SCALA_TEST_FILE), eq(contentOfFiles.get(2)));
+    verifyNoMoreInteractions(sensorContext);
+  }
+
+  @Test
+  public void shouldImportAllPackageObjects() {
+    when(fileSystem.mainFiles(scalaSourceImporter.getScala().getKey())).thenReturn(java.util.Arrays.asList(
+        InputFileUtils.create(new File("src/test/resources/"), "scalaSourceImporter/package.scala"),
+        InputFileUtils.create(new File("src/test/resources/"), "scalaSourceImporter/otherFolder/package.scala"),
+        InputFileUtils.create(new File("src/test/resources/"), "otherFolderForPackageObjectOnFirstLevel/package.scala")
+    ));
+    when(fileSystem.testFiles(scalaSourceImporter.getScala().getKey())).thenReturn(new ArrayList<InputFile>());
+
+    scalaSourceImporter.analyse(project, sensorContext);
+
+    verify(sensorContext, times(3)).index(eq(FileTestUtils.SCALA_SOURCE_FILE));
+    verify(sensorContext, times(3)).saveSource(eq(FileTestUtils.SCALA_SOURCE_FILE), any(String.class));
     verifyNoMoreInteractions(sensorContext);
   }
 
