@@ -19,8 +19,6 @@
  */
 package org.sonar.plugins.scala.metrics
 
-import scalariform.parser._
-
 /**
  * This object is a helper object for counting all statements
  * in a given Scala source.
@@ -29,6 +27,8 @@ import scalariform.parser._
  * @since 0.1
  */
 object StatementCounter {
+
+  import scalariform.parser._
 
   def countStatements(source: String) = {
 

@@ -19,7 +19,6 @@
  */
 package org.sonar.plugins.scala.metrics
 
-import reflect.generic.ModifierFlags
 import org.sonar.plugins.scala.compiler.{ Compiler, Parser }
 
 /**
@@ -63,16 +62,16 @@ object PublicApiCounter {
     case Apply(_, args) =>
       foundPublicApiMembers ++ args.flatMap(countPublicApiTrees(_, false, Nil))
 
-    case classDef: ClassDef if (classDef.mods.hasFlag(ModifierFlags.PRIVATE)) =>
+    case classDef: ClassDef if classDef.mods.hasFlag(Flag.PRIVATE) =>
       countPublicApiTrees(classDef.impl, false, foundPublicApiMembers)
 
-    case moduleDef: ModuleDef if (moduleDef.mods.hasFlag(ModifierFlags.PRIVATE)) =>
+    case moduleDef: ModuleDef if moduleDef.mods.hasFlag(Flag.PRIVATE) =>
       countPublicApiTrees(moduleDef.impl, false, foundPublicApiMembers)
 
-    case defDef: DefDef if (isEmptyConstructor(defDef) || defDef.mods.hasFlag(ModifierFlags.PRIVATE)) =>
+    case defDef: DefDef if isEmptyConstructor(defDef) || defDef.mods.hasFlag(Flag.PRIVATE) =>
       countPublicApiTrees(defDef.rhs, false, foundPublicApiMembers)
 
-    case valDef: ValDef if (valDef.mods.hasFlag(ModifierFlags.PRIVATE)) =>
+    case valDef: ValDef if valDef.mods.hasFlag(Flag.PRIVATE) =>
       countPublicApiTrees(valDef.rhs, false, foundPublicApiMembers)
 
     /*

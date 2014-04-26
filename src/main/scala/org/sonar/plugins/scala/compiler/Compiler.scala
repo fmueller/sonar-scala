@@ -19,8 +19,8 @@
  */
 package org.sonar.plugins.scala.compiler
 
-import tools.nsc._
-import tools.util.PathResolver._
+import scala.tools.nsc.{Settings, Global}
+import org.slf4j.LoggerFactory
 
 /**
  * This is a wrapper for the Scala compiler. It is used to access
@@ -29,10 +29,19 @@ import tools.util.PathResolver._
  * @author Felix Müller
  * @since 0.1
  */
-object Compiler extends Global(new Settings()) {
+object Compiler extends Global(new Settings() {
 
-  settings.classpath.append(org.sonar.plugins.scala.ScalaPlugin.getPathToScalaLibrary())
-  new Run
+  bootclasspath.append(org.sonar.plugins.scala.ScalaPlugin.getPathToScalaLibrary)
+
+}) {
+
+  private val LOGGER = LoggerFactory.getLogger(classOf[Compiler])
+
+  try {
+    new Run()
+  } catch {
+    case ex: Throwable => LOGGER.error("Could not initiate Scala compiler, probably due classpath issues!", ex)
+  }
 
   override def forScaladoc = true
 }

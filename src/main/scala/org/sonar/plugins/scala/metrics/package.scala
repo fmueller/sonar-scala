@@ -19,9 +19,9 @@
  */
 package org.sonar.plugins.scala
 
-import org.sonar.plugins.scala.compiler.Compiler._
-
 package object metrics {
+
+  import org.sonar.plugins.scala.compiler.Compiler._
 
   def isEmptyBlock(block: Tree) = block match {
     case literal: Literal =>
@@ -62,7 +62,5 @@ package object metrics {
    * Helper function which applies a function on every AST in a given list and
    * sums up the results.
    */
-  def onList(trees: List[Tree], treeFunction: Tree => Int) = {
-    trees.map(treeFunction).foldLeft(0)(_ + _)
-  }
+  def onList(trees: List[Tree], treeFunction: Tree => Int) = trees.map(treeFunction).sum
 }

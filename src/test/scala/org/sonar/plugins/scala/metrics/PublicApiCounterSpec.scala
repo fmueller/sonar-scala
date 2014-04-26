@@ -20,8 +20,7 @@
 package org.sonar.plugins.scala.metrics
 
 import org.junit.runner.RunWith
-import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{ShouldMatchers, FlatSpec}
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
@@ -77,14 +76,6 @@ class PublicApiCounterSpec extends FlatSpec with ShouldMatchers {
 
   it should "count an undocumented class declaration" in {
     PublicApiCounter.countUndocumentedPublicApi("class A {}") should be (1)
-  }
-
-  it should "not count a documented class declaration as undocumented one" in {
-    val source = """/**
-       * This is a comment of a public api member.
-       */
-      class A {}"""
-    PublicApiCounter.countUndocumentedPublicApi(source) should be (0)
   }
 
   it should "count an undocumented class declaration with package declaration before" in {

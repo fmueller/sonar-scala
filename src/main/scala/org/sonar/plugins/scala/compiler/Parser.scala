@@ -19,8 +19,8 @@
  */
 package org.sonar.plugins.scala.compiler
 
-import tools.nsc._
-import io.AbstractFile
+import scala.reflect.internal.util.{ScriptSourceFile, BatchSourceFile}
+import scala.reflect.io.AbstractFile
 
 /**
  * This class is a wrapper for accessing the parser of the Scala compiler
@@ -33,27 +33,26 @@ class Parser {
 
   import Compiler._
 
-  def parse(code: String) : Tree = {
-    val batchSourceFile = new util.BatchSourceFile("", code.toCharArray)
+  def parse(code: String): Tree = {
+    val batchSourceFile = new BatchSourceFile("", code.toCharArray)
     parse(batchSourceFile, code.toCharArray)
   }
 
-  def parseFile(path: String) = {
-    val batchSourceFile = new util.BatchSourceFile(AbstractFile.getFile(path))
+  def parseFile(path: String): Tree = {
+    val batchSourceFile = new BatchSourceFile(AbstractFile.getFile(path))
     parse(batchSourceFile, batchSourceFile.content.array)
   }
 
-  private def parse(batchSourceFile: util.BatchSourceFile, code: Array[Char]) = {
-    val scriptSourceFile = new util.ScriptSourceFile(batchSourceFile, code, 0)
+  private def parse(batchSourceFile: BatchSourceFile, code: Array[Char]): Tree = {
     try {
-      val parser = new syntaxAnalyzer.SourceFileParser(scriptSourceFile)
+      val parser = new syntaxAnalyzer.SourceFileParser(new ScriptSourceFile(batchSourceFile, code, 0))
       val tree = parser.templateStatSeq(false)._2
       parser.makePackaging(0, parser.atPos(0, 0, 0)(Ident(nme.EMPTY_PACKAGE_NAME)), tree)
     } catch {
-      case _ => {
+      case _: Throwable => {
         val unit = new CompilationUnit(batchSourceFile)
         val unitParser = new syntaxAnalyzer.UnitParser(unit) {
-          override def showSyntaxErrors() { }
+          override def showSyntaxErrors() {}
         }
         unitParser.smartParse()
       }

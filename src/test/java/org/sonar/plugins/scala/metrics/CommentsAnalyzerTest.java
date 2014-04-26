@@ -24,6 +24,7 @@ import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,39 +32,34 @@ import org.junit.Test;
 import org.sonar.plugins.scala.language.Comment;
 import org.sonar.plugins.scala.language.CommentType;
 
-import scala.actors.threadpool.Arrays;
-
 public class CommentsAnalyzerTest {
 
   @Test
   public void shouldCountAllCommentLines() throws IOException {
-    List<String> comments = Arrays.asList(new String[] {
-        "// this a normal comment",
-        "/* this is a normal multiline coment\r\n* last line of this comment */",
-        "// also a normal comment"
-      });
+    List<String> comments = Arrays.asList(
+            "// this a normal comment",
+            "/* this is a normal multiline coment\r\n* last line of this comment */",
+            "// also a normal comment");
     CommentsAnalyzer commentAnalyzer = new CommentsAnalyzer(asCommentList(comments, CommentType.NORMAL));
     assertThat(commentAnalyzer.countCommentLines(), is(4));
   }
 
   @Test
   public void shouldCountAllHeaderCommentLines() throws IOException {
-    List<String> comments = Arrays.asList(new String[] {
+    List<String> comments = Arrays.asList(
         "/* this is an one line header comment */",
         "/* this is a normal multiline header coment\r\n* last line of this comment */",
-        "/* also a normal header comment */"
-      });
+        "/* also a normal header comment */");
     CommentsAnalyzer commentAnalyzer = new CommentsAnalyzer(asCommentList(comments, CommentType.HEADER));
     assertThat(commentAnalyzer.countHeaderCommentLines(), is(4));
   }
 
   @Test
   public void shouldCountAllCommentedOutLinesOfCode() throws IOException {
-    List<String> comments = Arrays.asList(new String[] {
+    List<String> comments = Arrays.asList(
         "// val a = 12",
         "/* list.foreach(println(_))\r\n* def inc(x: Int) = x + 1 */",
-        "// this a normal comment"
-      });
+        "// this a normal comment");
     CommentsAnalyzer commentAnalyzer = new CommentsAnalyzer(asCommentList(comments, CommentType.NORMAL));
     assertThat(commentAnalyzer.countCommentedOutLinesOfCode(), is(3));
   }

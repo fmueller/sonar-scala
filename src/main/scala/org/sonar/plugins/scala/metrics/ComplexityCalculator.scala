@@ -19,13 +19,10 @@
  */
 package org.sonar.plugins.scala.metrics
 
-import collection.mutable.{ ListBuffer, HashMap }
+import collection.mutable.ListBuffer
 
-import org.sonar.api.measures.{ CoreMetrics, Measure, Metric }
+import org.sonar.api.measures.{ CoreMetrics, Metric }
 import org.sonar.plugins.scala.util.MetricDistribution
-
-import scalariform.lexer.Tokens._
-import scalariform.parser._
 
 /**
  * This object is a helper object for measuring complexity
@@ -35,6 +32,9 @@ import scalariform.parser._
  * @since 0.1
  */
 object ComplexityCalculator {
+
+  import scalariform.lexer.Tokens._
+  import scalariform.parser._
 
   private lazy val classComplexityRanges = Array[Number](0, 5, 10, 20, 30, 60, 90)
   private lazy val functionComplexityRanges = Array[Number](1, 2, 4, 6, 8, 10, 12)

@@ -20,8 +20,7 @@
 package org.sonar.plugins.scala.language
 
 import org.junit.runner.RunWith
-import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{ShouldMatchers, FlatSpec}
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])

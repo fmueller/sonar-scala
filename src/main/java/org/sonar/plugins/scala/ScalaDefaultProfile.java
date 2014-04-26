@@ -27,6 +27,10 @@ import org.sonar.plugins.scala.language.Scala;
 
 import java.util.Collections;
 
+/**
+ * This class is at the moment only necessary for Sonar 3.x compatibility.
+ * It does nothing.
+ */
 public class ScalaDefaultProfile extends ProfileDefinition {
 
   private final AnnotationProfileParser annotationProfileParser;

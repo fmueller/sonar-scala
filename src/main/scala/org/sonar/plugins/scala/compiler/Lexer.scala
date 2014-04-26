@@ -19,12 +19,11 @@
  */
 package org.sonar.plugins.scala.compiler
 
-import collection.JavaConversions._
 import collection.mutable.ListBuffer
-import tools.nsc._
-import io.AbstractFile
 
-import org.sonar.plugins.scala.language.{ Comment, CommentType }
+import org.sonar.plugins.scala.language.{Comment, CommentType}
+import scala.reflect.io.AbstractFile
+import scala.reflect.internal.util.BatchSourceFile
 
 /**
  * This class is a wrapper for accessing the lexer of the Scala compiler
@@ -35,19 +34,20 @@ import org.sonar.plugins.scala.language.{ Comment, CommentType }
  */
 class Lexer {
 
+  import scala.collection.JavaConversions._
   import Compiler._
 
-  def getTokens(code: String) : java.util.List[Token] = {
-    val unit = new CompilationUnit(new util.BatchSourceFile("", code.toCharArray))
+  def getTokens(code: String): java.util.List[Token] = {
+    val unit = new CompilationUnit(new BatchSourceFile("", code.toCharArray))
     tokenize(unit)
   }
 
-  def getTokensOfFile(path: String) : java.util.List[Token] = {
-    val unit = new CompilationUnit(new util.BatchSourceFile(AbstractFile.getFile(path)))
+  def getTokensOfFile(path: String): java.util.List[Token] = {
+    val unit = new CompilationUnit(new BatchSourceFile(AbstractFile.getFile(path)))
     tokenize(unit)
   }
 
-  private def tokenize(unit: CompilationUnit) : java.util.List[Token] = {
+  private def tokenize(unit: CompilationUnit): java.util.List[Token] = {
     val scanner = new syntaxAnalyzer.UnitScanner(unit)
     val tokens = ListBuffer[Token]()
 
@@ -59,17 +59,17 @@ class Lexer {
     tokens
   }
 
-  def getComments(code: String) : java.util.List[Comment] = {
-    val unit = new CompilationUnit(new util.BatchSourceFile("", code.toCharArray))
+  def getComments(code: String): java.util.List[Comment] = {
+    val unit = new CompilationUnit(new BatchSourceFile("", code.toCharArray))
     tokenizeComments(unit)
   }
 
-  def getCommentsOfFile(path: String) : java.util.List[Comment] = {
-    val unit = new CompilationUnit(new util.BatchSourceFile(AbstractFile.getFile(path)))
+  def getCommentsOfFile(path: String): java.util.List[Comment] = {
+    val unit = new CompilationUnit(new BatchSourceFile(AbstractFile.getFile(path)))
     tokenizeComments(unit)
   }
 
-  private def tokenizeComments(unit: CompilationUnit) : java.util.List[Comment] = {
+  private def tokenizeComments(unit: CompilationUnit): java.util.List[Comment] = {
     val comments = ListBuffer[Comment]()
     val scanner = new syntaxAnalyzer.UnitScanner(unit) {
 

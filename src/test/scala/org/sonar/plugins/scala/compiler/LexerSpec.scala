@@ -23,14 +23,11 @@ import tools.nsc.ast.parser.Tokens._
 
 import java.util.Arrays
 import org.junit.runner.RunWith
-import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{ShouldMatchers, FlatSpec}
 import org.scalatest.junit.JUnitRunner
 
 import org.sonar.plugins.scala.language.{ Comment, CommentType }
-import org.sonar.plugins.scala.util.FileTestUtils;
-
-import collection.JavaConversions._
+import org.sonar.plugins.scala.util.FileTestUtils
 
 @RunWith(classOf[JUnitRunner])
 class LexerSpec extends FlatSpec with ShouldMatchers {
