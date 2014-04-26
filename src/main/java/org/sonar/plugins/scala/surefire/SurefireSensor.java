@@ -31,47 +31,47 @@ import org.sonar.api.resources.Qualifiers;
 import org.sonar.api.resources.Resource;
 import org.sonar.plugins.scala.language.Scala;
 import org.sonar.plugins.surefire.api.AbstractSurefireParser;
-import org.sonar.plugins.surefire.api.SurefireUtils;
 
 import java.io.File;
 
 public class SurefireSensor implements Sensor {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SurefireSensor.class);
+  private static final Logger LOG = LoggerFactory.getLogger(SurefireSensor.class);
 
-    @DependsUpon
-    public Class<?> dependsUponCoverageSensors() {
-        return CoverageExtension.class;
+  @DependsUpon
+  public Class<?> dependsUponCoverageSensors() {
+    return CoverageExtension.class;
+  }
+
+  public boolean shouldExecuteOnProject(Project project) {
+    return project.getAnalysisType().isDynamic(true) && Scala.INSTANCE.getKey().equals(project.getLanguageKey());
+  }
+
+  public void analyse(Project project, SensorContext context) {
+    String path = (String) project.getProperty(CoreProperties.SUREFIRE_REPORTS_PATH_PROPERTY);
+    if (path != null) {
+      File pathFile = project.getFileSystem().resolvePath(path);
+      collect(project, context, pathFile);
     }
+  }
 
-    public boolean shouldExecuteOnProject(Project project) {
-        return project.getAnalysisType().isDynamic(true) && Scala.INSTANCE.getKey().equals(project.getLanguageKey());
-    }
+  protected void collect(Project project, SensorContext context, File reportsDir) {
+    LOG.info("parsing {}", reportsDir);
+    SUREFIRE_PARSER.collect(project, context, reportsDir);
+  }
 
-    public void analyse(Project project, SensorContext context) {
-        String path = (String) project.getProperty(CoreProperties.SUREFIRE_REPORTS_PATH_PROPERTY);
-        File pathFile = project.getFileSystem().resolvePath(path);
-        collect(project, context, pathFile);
-    }
-
-    protected void collect(Project project, SensorContext context, File reportsDir) {
-        LOG.info("parsing {}", reportsDir);
-        SUREFIRE_PARSER.collect(project, context, reportsDir);
-    }
-
-    private static final AbstractSurefireParser SUREFIRE_PARSER = new AbstractSurefireParser() {
-        @Override
-        protected Resource<?> getUnitTestResource(String classKey) {
-            String filename = classKey.replace('.', '/') + ".scala";
-            org.sonar.api.resources.File sonarFile = new org.sonar.api.resources.File(filename);
-            sonarFile.setQualifier(Qualifiers.UNIT_TEST_FILE);
-            return sonarFile;
-        }
-    };
-
+  private static final AbstractSurefireParser SUREFIRE_PARSER = new AbstractSurefireParser() {
     @Override
-    public String toString() {
-        return "Scala SurefireSensor";
+    protected Resource<?> getUnitTestResource(String classKey) {
+      String filename = classKey.replace('.', '/') + ".scala";
+      org.sonar.api.resources.File sonarFile = new org.sonar.api.resources.File(filename);
+      sonarFile.setQualifier(Qualifiers.UNIT_TEST_FILE);
+      return sonarFile;
     }
+  };
 
+  @Override
+  public String toString() {
+    return "Scala SurefireSensor";
+  }
 }
