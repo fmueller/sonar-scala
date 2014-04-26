@@ -20,6 +20,7 @@
 package org.sonar.plugins.scala.language;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.sonar.api.resources.InputFile;
 import org.sonar.api.resources.Language;
 import org.sonar.api.resources.Qualifiers;
@@ -137,4 +138,13 @@ public class ScalaFile extends Resource<ScalaPackage> {
     }
     return StringUtils.substringBeforeLast(classname, ".");
   }
+
+    @Override
+    public String toString() {
+      return new ToStringBuilder(this)
+          .append("key", getKey())
+          .append("fileName", filename)
+          .append("isUnitTest", isUnitTest)
+          .toString();
+    }
 }
