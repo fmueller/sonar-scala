@@ -21,6 +21,7 @@ package org.sonar.plugins.scala.compiler
 
 import scala.tools.nsc.{Settings, Global}
 import org.slf4j.LoggerFactory
+import java.net.URI
 
 /**
  * This is a wrapper for the Scala compiler. It is used to access
@@ -31,7 +32,8 @@ import org.slf4j.LoggerFactory
  */
 object Compiler extends Global(new Settings() {
 
-  bootclasspath.append(org.sonar.plugins.scala.ScalaPlugin.getPathToScalaLibrary)
+  val path = new URI(org.sonar.plugins.scala.ScalaPlugin.getPathToScalaLibrary).getPath()
+  bootclasspath.append(path)
 
 }) {
 
